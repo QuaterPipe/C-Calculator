@@ -1,24 +1,21 @@
-all: main clean run
+all: clear compileObjects link run
+flags = -c -g -std=c++17 -Wall -Werror
 
-CXX = g++
-override CXXFLAGS += -g -Wno-everything
+clear:
+	rm o/*
 
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.cpp' -print)
-OBJS = $(SRCS:.cpp=.o)
-DEPS = $(SRCS:.cpp=.d)
+compileObjects:
+	g++ $(flags) Factoring.cpp -o o/Factoring.o
+	g++ $(flags) Fraction.cpp -o o/Fraction.o
+	g++ $(flags) Polynomial.cpp -o o/Polynomial.o
+	g++ $(flags) Term.cpp -o o/Term.o
+	g++ $(flags) Variable.cpp -o o/Variable.o
 
-%.d: %.cpp
-	@set -e; rm -f $@; \
-	$(CXX) -MM $(CXXFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
+link:
+	g++ -std=c++17 -Wall -Werror main.cpp o/*.o -o main
 
-include $(DEPS)
-
-main: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o main
-
-clean:
-	rm -f $(OBJS) $(DEPS)
 run:
 	./main
+
+checkSyntax:
+	g++ -fsyntax-only -Wall *.cpp

@@ -3,9 +3,13 @@
 f64 gcf(const i64& a, const i64& b) noexcept
 {
 	if (!a)
-        return b;
-    else if (!b)
-        return a;
+	{
+		return b;
+	}
+	else if (!b)
+	{
+		return a;
+	}
 	return a < b ? gcf(a, b % a) : gcf(b, a % b);
 }
 

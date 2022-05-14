@@ -6,14 +6,13 @@ Variable::Variable() noexcept
 }
 
 Variable::Variable(const std::string& string) noexcept
-: coefficient(1), exponent(1), name('\0')
 {
 	size_t i = 0;
 	std::stringstream ss;
 	for (i = 0; i < string.length(); i++)
 	{
 		char c = string[i];
-		if (48 <= c && c <= 57 || (c == '.') || (c == '+') || (c == '-'))
+		if ((48 <= c && c <= 57) || (c == '.') || (c == '+') || (c == '-'))
 			ss << c;
 		else
 		{
@@ -44,7 +43,7 @@ Variable::Variable(const std::string& string) noexcept
 			i++;
 			break;
 		}
-		if (65 <= c && c <= 90 || (91 <= c && c <= 122))
+		if ((65 <= c && c <= 90) || (91 <= c && c <= 122))
 		{
 			name = c;
 		}
@@ -87,7 +86,7 @@ Variable::Variable(const f64& coefficient, const f64& exponent, const char& name
 }
 
 Variable::Variable(const Variable& variable) noexcept
-: coefficient(variable.coefficient), name(variable.name), exponent(variable.exponent)
+: coefficient(variable.coefficient), exponent(variable.exponent), name(variable.name)
 {
 }
 
@@ -167,6 +166,7 @@ Variable Variable::GCF(const Term& other) const noexcept
 		if (var.name == v.name)
 			v.exponent = v.exponent < var.exponent ? v.exponent : var.exponent;
 	}
+	return v;
 }
 
 Variable Variable::GCF(const f64& other) const noexcept

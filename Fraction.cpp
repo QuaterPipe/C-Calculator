@@ -185,13 +185,13 @@ std::ostream& operator<<(std::ostream& os, const Fraction& f) noexcept
 f64 Fraction::GCD(const i64& a, const i64& b) noexcept
 {
 	if (!a)
-        return b;
-    else if (!b)
-        return a;
-    if (a < b)
-        return GCD(a, b % a);
-    else
-        return GCD(b, a % b);
+		return b;
+	else if (!b)
+		return a;
+	if (a < b)
+		return GCD(a, b % a);
+	else
+		return GCD(b, a % b);
 }
 
 Fraction Fraction::Reciprocal() const noexcept
